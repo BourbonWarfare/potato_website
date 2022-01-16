@@ -17,7 +17,7 @@ import { PostsService } from './posts.service';
     MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
   ],
   controllers: [PostsController, CommentsController],
-  providers: [PostsService, CommentsService, UsersService],
-  exports: [PostsService, CommentsService, UsersService],
+  providers: [PostsService, CommentsService],
+  exports: [PostsService, CommentsService],
 })
 export class PostsModule {}

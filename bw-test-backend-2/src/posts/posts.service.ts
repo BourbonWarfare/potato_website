@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { UsersService } from 'src/users/users.service';
 // import { Comment, CommentDocument } from '../comments/comments.schema';
 import { Post, PostDocument } from './posts.schema';
 
@@ -11,6 +12,7 @@ export class PostsService {
   constructor(
     @InjectModel(Post.name)
     private readonly postModel: Model<PostDocument>,
+    private readonly usersService: UsersService,
   ) {}
 
   async insertPost(
@@ -30,6 +32,9 @@ export class PostsService {
       author,
     });
     const result = await newPost.save();
+    const originalPoster = await this.usersService.findUser(author);
+    originalPoster[0].comments.push(newPost);
+    originalPoster[0].save();
     console.log('New post result: ', result);
     return result._id as string;
   }

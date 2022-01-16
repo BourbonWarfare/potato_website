@@ -13,7 +13,6 @@ import { UsersModule } from './users/users.module';
       'mongodb+srv://woflmao:U2hideyourkid19@bw-test-cluster.yunwp.mongodb.net/Blog?retryWrites=true&w=majority',
     ),
     PostsModule,
-    // UsersModule,
     AuthModule,
   ],
   controllers: [AppController],

@@ -5,7 +5,7 @@ import { Comment, CommentDocument } from './comments.schema';
 import { Post, PostDocument } from '../posts/posts.schema';
 import { PostsService } from '../posts/posts.service';
 import { UsersService } from '../users/users.service';
-import { UserService } from 'src/user-old/service/user.service';
+import { User, UserDocument } from 'src/users/users.schema';
 
 @Injectable()
 export class CommentsService {
@@ -17,20 +17,24 @@ export class CommentsService {
     @InjectModel(Post.name)
     private readonly postModel: Model<PostDocument>,
     private readonly postsService: PostsService,
-    private readonly usersService: UserService, // This line is causing the issue
+    // @InjectModel(User.name) 
+    // private readonly userModel: Model<UserDocument>,
+    private readonly usersService: UsersService,
   ) {}
 
   async addComment(postId: string, author: string, body: string) {
     const updatedPost = await this.postsService.findPost(postId);
-    // const originalPoster = await this.usersService.findUser(author);
+    const originalPoster = await this.usersService.findUser(author);
+    console.log('originalPoster: ', originalPoster);
     const newComment = {
       author,
       body,
     };
     updatedPost.comments.push(newComment);
     updatedPost.save();
-    // originalPoster.comments.push(newComment);
-    // originalPoster.save();
+    originalPoster[0].comments.push(newComment);
+    console.log('origina poster updated: ', originalPoster);
+    originalPoster[0].save();
     console.log('updatedPost', updatedPost);
   }
   async updateComment(postId: string, commentId: string, body: string) {
