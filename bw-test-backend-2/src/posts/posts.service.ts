@@ -21,7 +21,7 @@ export class PostsService {
     url: string,
     type: string,
     category: string,
-    author: string,
+    author: number,
   ) {
     const newPost = new this.postModel({
       title,
@@ -32,9 +32,10 @@ export class PostsService {
       author,
     });
     const result = await newPost.save();
-    const originalPoster = await this.usersService.findUser(author);
-    originalPoster[0].comments.push(newPost);
-    originalPoster[0].save();
+    // const originalPoster = await this.usersService.findUser(author);
+    // console.log('original poster: ', originalPoster);
+    // originalPoster[0].posts.push(newPost);
+    // originalPoster[0].save();
     console.log('New post result: ', result);
     return result._id as string;
   }

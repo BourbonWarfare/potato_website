@@ -17,8 +17,15 @@ export class UsersController {
   async addUser(
     @Body('username') userName: string,
     @Body('password') userPass: string,
+    @Body('comments') userComments: any,
+    @Body('posts') userPosts: any,
   ) {
-    const generatedId = await this.usersService.insertUser(userName, userPass);
+    const generatedId = await this.usersService.insertUser(
+      userName,
+      userPass,
+      userComments,
+      userPosts,
+    );
     return { id: generatedId };
   }
   @Get()

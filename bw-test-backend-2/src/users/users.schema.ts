@@ -19,10 +19,12 @@ export class User {
   @Prop({ default: false })
   admin: boolean;
 
-  @Prop([CommentSchema])
+  // @Prop([CommentSchema])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
   comments: any;
 
-  @Prop([PostSchema])
+  // @Prop([PostSchema])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
   posts: any;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

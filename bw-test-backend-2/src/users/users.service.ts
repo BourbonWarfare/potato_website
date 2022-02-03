@@ -13,14 +13,19 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async insertUser(username: string, password: string) {
+  async insertUser(
+    username: string,
+    password: string,
+    comments: any,
+    posts: any,
+  ) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new this.userModel({
       username,
       password: hashedPassword,
       admin: false,
-      comments: [],
-      posts: [],
+      comments,
+      posts,
     });
     const result = await newUser.save();
     console.log('New user result: ', result);

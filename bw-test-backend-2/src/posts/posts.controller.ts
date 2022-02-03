@@ -21,7 +21,7 @@ export class PostsController {
     @Body('url') postUrl: string,
     @Body('type') postType: string,
     @Body('category') postCategory: string,
-    @Body('author') postAuthor: string,
+    @Body('author') postAuthor: number,
   ) {
     const generatedId = await this.postsService.insertPost(
       postTitle,
@@ -36,6 +36,7 @@ export class PostsController {
   @Get()
   async getAllPosts() {
     const posts = await this.postsService.getPosts();
+    console.log(posts);
     return posts;
   }
   @Get(':id')

@@ -24,11 +24,12 @@ export class Post {
   @Prop()
   category: string;
 
-  @Prop()
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true })
-  author: string;
+  // @Prop()
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  author: number;
 
-  @Prop([CommentSchema])
+  // @Prop([CommentSchema])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
   comments: any;
 
   @Prop()
