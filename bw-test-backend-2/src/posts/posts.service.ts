@@ -32,6 +32,7 @@ export class PostsService {
       author,
     });
     const result = await newPost.save();
+    newPost.populate('User')
     // const originalPoster = await this.usersService.findUser(author);
     // console.log('original poster: ', originalPoster);
     // originalPoster[0].posts.push(newPost);

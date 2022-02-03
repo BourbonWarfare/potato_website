@@ -17,8 +17,11 @@ export class Comment {
 
   @Prop({ default: Date.now })
   created: Date;
-
+  // this is the post it is attached to
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
+  post: any;
   // @Prop()
+  // this is any comments that are attached to it'
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
   // @Prop([CommentSchema])
   comments: any;
