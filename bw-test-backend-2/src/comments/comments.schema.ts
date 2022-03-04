@@ -22,7 +22,7 @@ export class Comment {
   post: any;
   // @Prop()
   // this is any comments that are attached to it'
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }])
   // @Prop([CommentSchema])
   comments: any;
 }

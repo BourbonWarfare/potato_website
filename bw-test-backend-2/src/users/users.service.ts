@@ -39,16 +39,17 @@ export class UsersService {
       password: user.password,
     }));
   }
-  async getSingleUser(username: string) {
-    const user = await this.findUser(username);
+  async getSingleUser(userId: number) {
+    const user = await this.findUser(userId);
     return {
-      id: user[0]._id,
-      username: user[0].username,
-      password: user[0].password,
-      admin: user[0].admin,
+      id: user._id,
+      username: user.username,
+      password: user.password,
+      admin: user.admin,
+      posts: user.posts,
     };
   }
-  async updateUser(userId: string, password: string) {
+  async updateUser(userId: number, password: string) {
     const updatedUser = await this.findUser(userId);
     if (password) {
       updatedUser.password = password;
@@ -61,11 +62,12 @@ export class UsersService {
       throw new NotFoundException('Could not find user');
     }
   }
-  async findUser(username: string): Promise<UserDocument> {
+  async findUser(userId: number): Promise<UserDocument> {
     let user;
     try {
       // user = await this.userModel.findById(username).exec();
-      user = await this.userModel.find({ username: username }).exec();
+      user = await this.userModel.findById(userId).populate('posts').exec();
+      console.log('found user: ', user);
     } catch (error) {
       throw new NotFoundException('Could not find user.');
     }

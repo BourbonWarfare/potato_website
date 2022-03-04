@@ -34,12 +34,12 @@ export class UsersController {
     return users;
   }
   @Get(':id')
-  getUser(@Param('id') userId: string) {
+  getUser(@Param('id') userId: number) {
     return this.usersService.getSingleUser(userId);
   }
   @Patch(':id')
   async updateUser(
-    @Param('id') userId: string,
+    @Param('id') userId: number,
     @Body('password') userPass: string,
   ) {
     await this.usersService.updateUser(userId, userPass);

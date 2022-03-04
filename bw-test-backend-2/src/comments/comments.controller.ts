@@ -11,14 +11,16 @@ export class CommentsController {
 
   @Post(':id')
   async insertComment(
-    @Param('id') postId: string,
-    @Body('author') commentAuthor: string,
+    @Param('id') post: number,
+    @Body('author') commentAuthor: number,
     @Body('body') commentBody: string,
+    @Body('comment') commentId: number,
   ) {
     const generatedId = await this.commentsService.addComment(
-      postId,
+      post,
       commentAuthor,
       commentBody,
+      commentId,
     );
     return { id: generatedId };
   }

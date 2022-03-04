@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { CommentSchema } from '../comments/comments.schema';
+import { User } from 'src/users/users.schema';
 
 export type PostDocument = Post & mongoose.Document;
-//  extends mongoose.Document
+
 @Schema()
 export class Post {
   @Prop()
@@ -24,12 +24,10 @@ export class Post {
   @Prop()
   category: string;
 
-  // @Prop()
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
-  author: number;
+  author: User;
 
-  // @Prop([CommentSchema])
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }])
   comments: any;
 
   @Prop()

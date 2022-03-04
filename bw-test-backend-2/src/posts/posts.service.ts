@@ -32,11 +32,11 @@ export class PostsService {
       author,
     });
     const result = await newPost.save();
-    newPost.populate('User')
-    // const originalPoster = await this.usersService.findUser(author);
-    // console.log('original poster: ', originalPoster);
-    // originalPoster[0].posts.push(newPost);
-    // originalPoster[0].save();
+    // newPost.populate('User');
+    const originalPoster = await this.usersService.findUser(author);
+    console.log('original poster: ', originalPoster);
+    originalPoster.posts.push(result._id);
+    originalPoster.save();
     console.log('New post result: ', result);
     return result._id as string;
   }
@@ -53,7 +53,7 @@ export class PostsService {
       comments: post.comments,
     }));
   }
-  async getSinglePost(postId: string) {
+  async getSinglePost(postId: number) {
     const post = await this.findPost(postId);
     return {
       id: post._id,
@@ -67,7 +67,7 @@ export class PostsService {
     };
   }
   async updatePost(
-    postId: string,
+    postId: number,
     title: string,
     text: string,
     url: string,
@@ -98,7 +98,7 @@ export class PostsService {
       throw new NotFoundException('Could not find postasdf.');
     }
   }
-  async findPost(id: string): Promise<PostDocument> {
+  async findPost(id: number): Promise<PostDocument> {
     let post;
     try {
       post = await this.postModel.findById(id).exec();

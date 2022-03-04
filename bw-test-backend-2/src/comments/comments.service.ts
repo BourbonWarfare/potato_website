@@ -22,18 +22,34 @@ export class CommentsService {
     private readonly usersService: UsersService,
   ) {}
 
-  async addComment(postId: string, author: string, body: string) {
-    const updatedPost = await this.postsService.findPost(postId);
-    // const originalPoster = await this.usersService.findUser(author);
-    // console.log('originalPoster: ', originalPoster);
-    const newComment = {
+  async addComment(
+    post: number,
+    author: number,
+    body: string,
+    comment: number,
+  ) {
+    const newComment = new this.commentModel({
+      post,
       author,
       body,
-    };
-    updatedPost.comments.push(newComment);
-    updatedPost.save();
-    // originalPoster[0].comments.push(newComment);
-    // originalPoster[0].save();
+      comment,
+    });
+    const result = await newComment.save();
+    console.log('newComment: ', newComment);
+    const foundPost = await this.postsService.findPost(post);
+    const originalPoster = await this.usersService.findUser(author);
+    const foundComment = await this.findComment(comment);
+    // console.log('originalPoster: ', originalPoster);
+    // const newComment = {
+    //   author,
+    //   body,
+    // };
+    foundPost.comments.push(result._id);
+    foundPost.save();
+    originalPoster.comments.push(result._id);
+    originalPoster.save();
+    foundComment.comments.push(result._id);
+    foundComment.save();
   }
   async updateComment(postId: string, commentId: string, body: string) {
     const result = await this.postModel.findById(postId);
@@ -63,16 +79,16 @@ export class CommentsService {
   //     created: comment.created,
   //   }));
   // }
-  // private async findComment(id: string): Promise<Comment> {
-  //   let comment;
-  //   try {
-  //     comment = await this.commentModel.findById(id).exec();
-  //   } catch (error) {
-  //     throw new NotFoundException('Could not find comment by id.');
-  //   }
-  //   if (!comment) {
-  //     throw new NotFoundException('Could not find comment by id.');
-  //   }
-  //   return comment;
-  // }
+  private async findComment(id: number): Promise<CommentDocument> {
+    let comment;
+    try {
+      comment = await this.commentModel.findById(id).exec();
+    } catch (error) {
+      throw new NotFoundException('Error: Could not find comment by id.');
+    }
+    if (!comment) {
+      throw new NotFoundException('No Comment: Could not find comment by id.');
+    }
+    return comment;
+  }
 }

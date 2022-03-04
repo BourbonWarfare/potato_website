@@ -40,12 +40,12 @@ export class PostsController {
     return posts;
   }
   @Get(':id')
-  getPost(@Param('id') postId: string) {
+  getPost(@Param('id') postId: number) {
     return this.postsService.getSinglePost(postId);
   }
   @Patch(':id')
   async updatePost(
-    @Param('id') postId: string,
+    @Param('id') postId: number,
     @Body('title') postTitle: string,
     @Body('text') postText: string,
     @Body('url') postUrl: string,
