@@ -22,28 +22,46 @@ export class CommentsService {
     private readonly usersService: UsersService,
   ) {}
 
-  async addComment(
-    post: number,
-    author: number,
-    body: string,
-    comment: number,
-  ) {
+  async addComment(post: string, author: string, body: string) {
     const newComment = new this.commentModel({
       post,
       author,
       body,
-      comment,
     });
     const result = await newComment.save();
     console.log('newComment: ', newComment);
     const foundPost = await this.postsService.findPost(post);
     const originalPoster = await this.usersService.findUser(author);
-    const foundComment = await this.findComment(comment);
+    // const foundComment = await this.findComment(comment);
     // console.log('originalPoster: ', originalPoster);
     // const newComment = {
     //   author,
     //   body,
     // };
+    foundPost.comments.push(result._id);
+    foundPost.save();
+    originalPoster.comments.push(result._id);
+    originalPoster.save();
+    // foundComment.comments.push(result._id);
+    // foundComment.save();
+  }
+  async addThreadedComment(
+    post: string,
+    commentId: number,
+    author: string,
+    body: string,
+  ) {
+    const newThreadedComment = new this.commentModel({
+      post,
+      commentId,
+      author,
+      body,
+    });
+    const result = await newThreadedComment.save();
+    console.log('newThreadedComment: ', newThreadedComment);
+    const foundPost = await this.postsService.findPost(post);
+    const originalPoster = await this.usersService.findUser(author);
+    const foundComment = await this.findComment(commentId);
     foundPost.comments.push(result._id);
     foundPost.save();
     originalPoster.comments.push(result._id);
@@ -84,7 +102,7 @@ export class CommentsService {
     try {
       comment = await this.commentModel.findById(id).exec();
     } catch (error) {
-      throw new NotFoundException('Error: Could not find comment by id.');
+      throw new NotFoundException(`Error: ${error}`);
     }
     if (!comment) {
       throw new NotFoundException('No Comment: Could not find comment by id.');

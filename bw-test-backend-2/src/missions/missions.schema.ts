@@ -4,10 +4,10 @@ import { User } from 'src/users/users.schema';
 // import paginate from 'mongoose-paginate-v2';
 // import paginate = require('mongoose-paginate-v2');/
 
-export type PostDocument = Post & mongoose.Document;
+export type MissionDocument = Mission & mongoose.Document;
 
 @Schema()
-export class Post {
+export class Mission {
   @Prop()
   id: string;
 
@@ -44,8 +44,19 @@ export class Post {
   // view: number;
 }
 
-const PostSchema = SchemaFactory.createForClass(Post);
+const MissionSchema = SchemaFactory.createForClass(Mission);
 
-PostSchema.index({ title: 'text', text: 'text' });
+MissionSchema.index({ title: 'text', text: 'text' });
 
-export { PostSchema };
+export { MissionSchema };
+
+// mission = {
+//   long: boolean (true or false)
+//   type: co-op | pvp | afterHours | other?
+//   author: UserType
+//   comments: CommentType
+//   created: Date
+//   passCount: Number
+//   passed: boolean (true or false)
+//   played: boolean (true or false)
+// }

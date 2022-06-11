@@ -11,18 +11,31 @@ export class CommentsController {
 
   @Post(':id')
   async insertComment(
-    @Param('id') post: number,
-    @Body('author') commentAuthor: number,
+    @Param('id') post: string,
+    @Body('author') commentAuthor: string,
     @Body('body') commentBody: string,
-    @Body('comment') commentId: number,
   ) {
     const generatedId = await this.commentsService.addComment(
       post,
       commentAuthor,
       commentBody,
-      commentId,
     );
     return { id: generatedId };
+  }
+  @Post(':id/:commentId')
+  async insertThreadedComment(
+    @Param('id') post: string,
+    @Param('commentId') commentId: number,
+    @Body('author') commentAuthor: string,
+    @Body('body') commentBody: string,
+  ) {
+    const generatedId = await this.commentsService.addThreadedComment(
+      post,
+      commentId,
+      commentAuthor,
+      commentBody,
+    );
+    return generatedId;
   }
   @Patch(':id')
   async updateComment(

@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import * as mongoose from 'mongoose';
 
 @Controller('users')
 export class UsersController {
@@ -19,12 +20,14 @@ export class UsersController {
     @Body('password') userPass: string,
     @Body('comments') userComments: any,
     @Body('posts') userPosts: any,
+    @Body('email') userEmail: string,
   ) {
     const generatedId = await this.usersService.insertUser(
       userName,
       userPass,
       userComments,
       userPosts,
+      userEmail,
     );
     return { id: generatedId };
   }
@@ -34,12 +37,12 @@ export class UsersController {
     return users;
   }
   @Get(':id')
-  getUser(@Param('id') userId: number) {
+  getUser(@Param('id') userId: string) {
     return this.usersService.getSingleUser(userId);
   }
   @Patch(':id')
   async updateUser(
-    @Param('id') userId: number,
+    @Param('id') userId: string,
     @Body('password') userPass: string,
   ) {
     await this.usersService.updateUser(userId, userPass);

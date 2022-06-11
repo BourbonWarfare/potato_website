@@ -7,7 +7,7 @@ import { find } from 'rxjs';
 import { UsersService } from 'src/users/users.service';
 import * as mongoose from 'mongoose';
 // import { Comment, CommentDocument } from '../comments/comments.schema';
-import { Post, PostDocument } from './posts.schema';
+import { Post, PostDocument } from './missions.schema';
 
 @Injectable()
 export class PostsService {

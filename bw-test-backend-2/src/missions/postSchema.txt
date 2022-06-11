@@ -1,0 +1,31 @@
+|                    |                   |
+| ------------------ | ----------------- |
+| post id            | global comment id |
+| topic id           | post id           |
+| forum id           |                   |
+| poster id          |                   |
+| icon id            |                   |
+| poster ip          |                   |
+| post time          |                   |
+| post reported      |                   |
+| enable bbcode      | html markdown     |
+| enable smilies     |                   |
+| enable magic url   |                   |
+| enable sig         |                   |
+| post username      |                   |
+| post subject       | title             |
+| post text          | content           |
+| post checksum      |                   |
+| post attachment    |                   |
+| bb code bitfiled   |                   |
+| bbcode uid         |                   |
+| post postcount     |                   |
+| post edit time     |                   |
+| post edit reason   |                   |
+| post edit user     |                   |
+| post edit count    |                   |
+| post edit locked   |                   |
+| post visibility    |                   |
+| post delete time   |                   |
+| post delete reason |                   |
+| post delete user   |                   |

@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { PaginationaParams } from 'src/filters/paginationParams';
-import { PostEntity } from './posts.entity';
-import { PostsService } from './posts.service';
+import { PostEntity } from './missions.entity';
+import { PostsService } from './missions.service';
 import * as mongoose from 'mongoose';
 
 @Controller('posts')

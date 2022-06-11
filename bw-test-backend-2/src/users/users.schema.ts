@@ -8,7 +8,7 @@ export class User {
   @Prop()
   id: string;
 
-  @Prop()
+  @Prop({ unique: true })
   username: string;
 
   @Prop()
@@ -17,10 +17,17 @@ export class User {
   @Prop({ default: false })
   admin: boolean;
 
+  @Prop({ unique: true })
+  email: string;
+
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }])
   comments: any;
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }])
   posts: any;
 }
-export const UserSchema = SchemaFactory.createForClass(User);
+const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ username: 1 });
+
+export { UserSchema };
