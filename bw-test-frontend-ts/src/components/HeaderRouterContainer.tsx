@@ -152,15 +152,12 @@ const HeaderRouterContainer: React.FC = ({ children }) => {
     >
       {/* <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}> */}
       <Sider
-        style={{
-          overflow: 'auto',
-          // maxWidth: '400px !important',
-          maxWidth: '300px',
-          flex: '0 0 300px',
-        }}
         collapsible
         collapsed={collapsed}
         onCollapse={onCollapse}
+        style={{
+          overflow: 'auto',
+        }}
       >
         <div className="logo" />
         <Menu
