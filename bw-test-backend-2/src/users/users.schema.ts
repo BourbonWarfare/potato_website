@@ -25,6 +25,9 @@ export class User {
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }])
   posts: any;
+
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Mission' }])
+  missions: any;
 }
 const UserSchema = SchemaFactory.createForClass(User);
 

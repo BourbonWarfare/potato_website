@@ -1,45 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
-import { paginate } from 'nestjs-paginate';
-import { cursorTo } from 'readline';
-import { find } from 'rxjs';
 import { UsersService } from 'src/users/users.service';
-import * as mongoose from 'mongoose';
-// import { Comment, CommentDocument } from '../comments/comments.schema';
-import { Post, PostDocument } from './missions.schema';
+import { Mission, MissionDocument } from './missions.schema';
 
 @Injectable()
-export class PostsService {
-  private posts: Post[] = [];
+export class MissionsService {
+  private missions: Mission[] = [];
 
   constructor(
-    @InjectModel(Post.name)
-    private readonly postModel: Model<PostDocument>,
+    @InjectModel(Mission.name)
+    private readonly missionModel: Model<MissionDocument>,
     private readonly usersService: UsersService,
   ) {}
 
-  async insertPost(
+  async insertMission(
     title: string,
-    text: string,
-    url: string,
+    long: boolean,
     type: string,
-    category: string,
+    map: string,
+    version: number,
     author: string,
   ) {
-    const newPost = new this.postModel({
+    const newMission = new this.missionModel({
       title,
-      text,
-      url,
+      long,
       type,
-      category,
+      map,
+      version,
       author,
     });
-    const result = await newPost.save();
+    const result = await newMission.save();
     // newPost.populate('User');
     const originalPoster = await this.usersService.findUser(author);
     console.log('original poster: ', originalPoster);
-    originalPoster.posts.push(result._id);
+    originalPoster.missions.push(result._id);
     originalPoster.save();
     console.log('New post result: ', result);
     return result._id as string;
@@ -52,7 +47,7 @@ export class PostsService {
     searchQuery?: string,
     page?: string,
   ) {
-    const filters: FilterQuery<PostDocument> = startId
+    const filters: FilterQuery<MissionDocument> = startId
       ? {
           _id: {
             $gt: startId,
@@ -68,7 +63,7 @@ export class PostsService {
 
     page !== undefined ? page : 1;
 
-    const findQuery = this.postModel
+    const findQuery = this.missionModel
       .find()
       .sort({ _id: 1 })
       .limit(limit)
@@ -86,36 +81,36 @@ export class PostsService {
       findQuery.limit(limit);
     }
     const results = await findQuery;
-    const count = await this.postModel.count();
+    const count = await this.missionModel.count();
     const pageHandle = page ? page : '1';
     const next = results.length
-      ? `localhost:8080/posts/?page=${parseInt(pageHandle) + 1}`
+      ? `localhost:8080/missions/?page=${parseInt(pageHandle) + 1}`
       : null;
     const prev =
       parseInt(page) > 1
-        ? `localhost:8080/posts/?page=${parseInt(pageHandle) - 1}`
+        ? `localhost:8080/missions/?page=${parseInt(pageHandle) - 1}`
         : null;
     return { count, page, next, prev, limit, results };
   }
-  async getSinglePost(postsCategory: string, postId: string) {
-    const results = await this.findPost(postId);
+  async getSingleMission(missionsCategory: string, missionId: string) {
+    const results = await this.findMission(missionId);
     // const result = await findQuery;
     // result ? result : 'No Post Found'
     return { results };
   }
-  async getCategoryPosts(
+  async getCategoryMissions(
     // documentsToSkip?: number,
     // limit?: number,
-    postsCategory,
+    missionsCategory,
     limit = 10,
     startId?: string,
     searchQuery?: string,
     page?: string,
   ) {
-    const filters: FilterQuery<PostDocument> = postsCategory
+    const filters: FilterQuery<MissionDocument> = missionsCategory
       ? {
           category: {
-            $in: postsCategory,
+            $in: missionsCategory,
           },
         }
       : {};
@@ -126,7 +121,7 @@ export class PostsService {
       };
     }
 
-    const findQuery = this.postModel
+    const findQuery = this.missionModel
       .find(filters)
       .sort({ id: 1 })
       .limit(limit)
@@ -144,58 +139,70 @@ export class PostsService {
     //   findQuery.limit(limit);
     // }
     const results = await findQuery;
-    const count = await this.postModel.count();
+    const count = await this.missionModel.count();
     const pageHandle = page ? page : '1';
     const next = results.length
-      ? `localhost:8080/posts/${postsCategory}/?page=${
+      ? `localhost:8080/missions/${missionsCategory}/?page=${
           parseInt(pageHandle) + 1
         }`
       : null;
     const prev =
       parseInt(page) > 1
-        ? `localhost:8080/posts/${postsCategory}/?page=${
+        ? `localhost:8080/missions/${missionsCategory}/?page=${
             parseInt(pageHandle) - 1
           }`
         : null;
     return { count, page, next, prev, limit, results };
   }
-  async updatePost(
-    postId: string,
+  async updateMission(
+    missionId: string,
     title: string,
-    text: string,
-    url: string,
-    type: string,
-    category: string,
+    passCount: number,
+    passed: boolean,
+    played: boolean,
+    version: number,
+    lastPlayed: Date,
+    broken: boolean,
+    datePassed: Date,
   ) {
-    const updatedPost = await this.findPost(postId);
+    const updatedMission = await this.findMission(missionId);
     if (title) {
-      updatedPost.title = title;
+      updatedMission.title = title;
     }
-    if (text) {
-      updatedPost.text = text;
+    if (passCount) {
+      updatedMission.passCount = passCount;
     }
-    if (url) {
-      updatedPost.url = url;
+    if (passed) {
+      updatedMission.passed = passed;
     }
-    if (type) {
-      updatedPost.type = type;
+    if (played) {
+      updatedMission.played = played;
     }
-    if (category) {
-      updatedPost.category = category;
+    if (version) {
+      updatedMission.version = version;
     }
-    updatedPost.save();
+    if (lastPlayed) {
+      updatedMission.lastPlayed = lastPlayed;
+    }
+    if (broken) {
+      updatedMission.broken = broken;
+    }
+    if (datePassed) {
+      updatedMission.datePassed = datePassed;
+    }
+    updatedMission.save();
   }
-  async deletePost(postId: string) {
-    const result = await this.postModel.deleteOne({ _id: postId }).exec();
+  async deleteMission(missionId: string) {
+    const result = await this.missionModel.deleteOne({ _id: missionId }).exec();
     if (result.deletedCount === 0) {
-      throw new NotFoundException('Could not find postasdf.');
+      throw new NotFoundException('Could not find mission.');
     }
   }
-  async findPost(id: string): Promise<PostDocument> {
-    let post;
+  async findMission(id: string): Promise<MissionDocument> {
+    let mission;
     try {
-      // post = await this.postModel.findById(id).exec();
-      post = await this.postModel
+      // post = await this.missionModel.findById(id).exec();
+      mission = await this.missionModel
         .findById(id)
         .populate('author')
         .populate('comments')
@@ -214,17 +221,17 @@ export class PostsService {
           },
         });
     } catch (error) {
-      throw new NotFoundException('Could not find post.');
+      throw new NotFoundException('Could not find mission.');
     }
-    if (!post) {
-      throw new NotFoundException('Could not find post.');
+    if (!mission) {
+      throw new NotFoundException('Could not find mission.');
     }
-    return post;
+    return mission;
   }
 }
 
 // async getPosts() {
-//   const posts = await this.postModel.find().exec();
+//   const posts = await this.missionModel.find().exec();
 //   return posts.map((post) => ({
 //     id: post._id,
 //     title: post.title,
@@ -237,7 +244,7 @@ export class PostsService {
 //   }));
 // }
 // async getSinglePost(postsCategory: string, postId: number) {
-//   const post = await this.findPost(postId);
+//   const post = await this.findMission(postId);
 //   return {
 //     id: post._id,
 //     title: post.title,

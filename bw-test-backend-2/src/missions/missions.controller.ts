@@ -10,69 +10,69 @@ import {
 } from '@nestjs/common';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { PaginationaParams } from 'src/filters/paginationParams';
-import { PostEntity } from './missions.entity';
-import { PostsService } from './missions.service';
+import { MissionsService } from './missions.service';
 import * as mongoose from 'mongoose';
 
-@Controller('posts')
-export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+@Controller('missions')
+export class MissionsController {
+  constructor(private readonly missionsService: MissionsService) {}
 
   @Post()
   // @Roles(Role.Admin) This is how you add role dependency, prob need addPostAdmin and addPostUser
-  async addPost(
-    @Body('title') postTitle: string,
-    @Body('text') postText: string,
-    @Body('url') postUrl: string,
-    @Body('type') postType: string,
-    @Body('category') postCategory: string,
-    @Body('author') postAuthor: string,
+  async addMission(
+    @Body('title') missionTitle: string,
+    @Body('long') missionLong: boolean,
+    @Body('type') missionType: string,
+    @Body('map') missionMap: string,
+    @Body('version') missionVersion: number,
+    @Body('author') missionAuthor: string,
   ) {
-    const generatedId = await this.postsService.insertPost(
-      postTitle,
-      postText,
-      postUrl,
-      postType,
-      postCategory,
-      postAuthor,
+    debugger;
+    const generatedId = await this.missionsService.insertMission(
+      missionTitle,
+      missionLong,
+      missionType,
+      missionMap,
+      missionVersion,
+      missionAuthor,
     );
     return { id: generatedId };
   }
   // @Get()
   // async getAllPosts() {
-  //   const posts = await this.postsService.getPosts();
+  //   const posts = await this.missionsService.getPosts();
   //   console.log(posts);
   //   return posts;
   // }
   @Get()
-  async getAllPosts(
+  async getAllMissions(
     // removed skip in favour of page
     @Query() { limit, startId }: PaginationaParams,
     @Query('page') page: string,
     @Query('searchQuery') searchQuery: string,
   ) {
-    return this.postsService.findAll(limit, startId, searchQuery, page);
+    return this.missionsService.findAll(limit, startId, searchQuery, page);
   }
   // @Get()
   // async getAllPostsPaginate(
   //   @Paginate() query: PaginateQuery,
   // ): Promise<Paginated<PostEntity>> {
-  //   return this.postsService.findAllPaginate(query);
+  //   return this.missionsService.findAllPaginate(query);
   // }
 
   // @Get(':id')
   // getPost(@Param('id') postId: number) {
-  //   return this.postsService.getSinglePost(postId);
+  //   return this.missionsService.getSinglePost(postId);
   // }
   @Get(':category')
-  getCategoryPosts(
-    @Param('category') postsCategory: string,
+  getCategoryMissions(
+    @Param('category') missionsCategory: string,
     @Query() { limit, startId }: PaginationaParams,
     @Query('page') page: string,
     @Query('searchQuery') searchQuery: string,
   ) {
-    return this.postsService.getCategoryPosts(
-      postsCategory,
+    return this.missionsService.getCategoryMissions(
+      missionsCategory,
       limit,
       startId,
       searchQuery,
@@ -81,33 +81,39 @@ export class PostsController {
   }
   @Get(':category/:id')
   async getPost(
-    @Param('category') postsCategory: string,
-    @Param('id') postId: string,
+    @Param('category') missionsCategory: string,
+    @Param('id') missionId: string,
   ) {
-    return this.postsService.getSinglePost(postsCategory, postId);
+    return this.missionsService.getSingleMission(missionsCategory, missionId);
   }
   @Patch(':id')
-  async updatePost(
-    @Param('id') postId: string,
-    @Body('title') postTitle: string,
-    @Body('text') postText: string,
-    @Body('url') postUrl: string,
-    @Body('type') postType: string,
-    @Body('category') postCategory: string,
+  async updateMission(
+    @Param('id') missionId: string,
+    @Body('title') missionTitle: string,
+    @Body('text') missionPassCount: number,
+    @Body('url') missionPassed: boolean,
+    @Body('type') missionPlayed: boolean,
+    @Body('category') missionVersion: number,
+    @Body('category') missionLastPlayed: Date,
+    @Body('category') missionBroken: boolean,
+    @Body('category') missionDatePassed: Date,
   ) {
-    await this.postsService.updatePost(
-      postId,
-      postTitle,
-      postText,
-      postUrl,
-      postType,
-      postCategory,
+    await this.missionsService.updateMission(
+      missionId,
+      missionTitle,
+      missionPassCount,
+      missionPassed,
+      missionPlayed,
+      missionVersion,
+      missionLastPlayed,
+      missionBroken,
+      missionDatePassed,
     );
     return null;
   }
   @Delete(':id')
-  async removePost(@Param('id') postId: string) {
-    await this.postsService.deletePost(postId);
+  async removeMission(@Param('id') missionId: string) {
+    await this.missionsService.deleteMission(missionId);
     return null;
   }
 }

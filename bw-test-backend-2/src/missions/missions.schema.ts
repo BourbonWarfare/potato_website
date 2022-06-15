@@ -15,16 +15,13 @@ export class Mission {
   title: string;
 
   @Prop()
-  text: string;
+  long: boolean;
 
   @Prop()
-  url: string;
+  passCount: number;
 
   @Prop()
   type: string;
-
-  @Prop()
-  category: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -36,6 +33,27 @@ export class Mission {
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }])
   comments: any;
+
+  @Prop()
+  passed: boolean;
+
+  @Prop()
+  played: boolean;
+
+  @Prop()
+  map: string;
+
+  @Prop()
+  version: number;
+
+  @Prop()
+  lastPlayed: Date;
+
+  @Prop()
+  broken: boolean;
+
+  @Prop()
+  datePassed: Date;
 
   @Prop()
   created: Date;
@@ -51,12 +69,18 @@ MissionSchema.index({ title: 'text', text: 'text' });
 export { MissionSchema };
 
 // mission = {
-//   long: boolean (true or false)
-//   type: co-op | pvp | afterHours | other?
-//   author: UserType
-//   comments: CommentType
-//   created: Date
-//   passCount: Number
-//   passed: boolean (true or false)
-//   played: boolean (true or false)
+//   long: boolean (true or false) x
+//   title: string x
+//   type: co-op | pvp | afterHours | offnight | other x
+//   author: UserType x
+//   comments: CommentType x
+//   dateCreated: Date x
+//   passCount: Number x
+//   passed: boolean (true or false) x
+//   played: boolean (true or false) x
+//   map: string x
+//   version: number x
+//   lastPlayed: Date x
+//   broken: boolean x
+//   datePassed: Date x
 // }

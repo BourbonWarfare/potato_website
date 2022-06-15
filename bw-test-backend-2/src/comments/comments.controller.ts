@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { PostsService } from '../posts/posts.service';
+// import { PostsService } from '../posts/posts.service';
 
 @Controller('comments')
 export class CommentsController {
   constructor(
     private readonly commentsService: CommentsService,
-    private readonly postsService: PostsService,
+    // private readonly postsService: PostsService,
   ) {}
 
   @Post(':id')
