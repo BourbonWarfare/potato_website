@@ -64,7 +64,7 @@ export const getUserInfo = async (userId?: string) => {
 export const getMissions = async (missionType: string, page?: number) => {
   // debugger;
   const load = await axios
-    .get(`/posts/${missionType}/?page=${page}`)
+    .get(`/missions/${missionType}/?page=${page}`)
     .then((response: any) => {
       console.log('get untested missions', response);
       return response.data.results;

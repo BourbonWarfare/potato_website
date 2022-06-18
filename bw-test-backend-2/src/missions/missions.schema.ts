@@ -58,8 +58,9 @@ export class Mission {
   @Prop()
   created: Date;
 
+  // use this in place of played and passed possibly, potentially easier to filter
   // @Prop()
-  // view: number;
+  // status: string;
 }
 
 const MissionSchema = SchemaFactory.createForClass(Mission);

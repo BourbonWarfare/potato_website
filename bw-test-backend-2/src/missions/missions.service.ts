@@ -29,6 +29,11 @@ export class MissionsService {
       map,
       version,
       author,
+      passed: false,
+      played: false,
+      broken: false,
+      passCount: 0,
+      created: new Date(),
     });
     const result = await newMission.save();
     // newPost.populate('User');
@@ -62,12 +67,13 @@ export class MissionsService {
     }
 
     page !== undefined ? page : 1;
+    // debugger;
 
     const findQuery = this.missionModel
       .find()
       .sort({ _id: 1 })
       .limit(limit)
-      .skip(page ? parseInt(page) * limit - limit : 1)
+      .skip(page ? parseInt(page) * limit - limit : 0)
       .populate('author')
       .populate('comments')
       .populate({
@@ -107,13 +113,28 @@ export class MissionsService {
     searchQuery?: string,
     page?: string,
   ) {
-    const filters: FilterQuery<MissionDocument> = missionsCategory
-      ? {
-          category: {
-            $in: missionsCategory,
-          },
-        }
-      : {};
+    const filters: FilterQuery<MissionDocument> =
+      missionsCategory === 'untested'
+        ? {
+            passed: { $eq: false },
+            played: { $eq: false },
+            broken: { $eq: false },
+          }
+        : missionsCategory === 'passed'
+        ? {
+            passed: { $eq: true },
+            played: { $eq: false },
+            broken: { $eq: false },
+          }
+        : missionsCategory === 'played'
+        ? {
+            passed: { $eq: true },
+            played: { $eq: true },
+            broken: { $eq: false },
+          }
+        : missionsCategory === 'broken'
+        ? { broken: { $eq: true } }
+        : {};
 
     if (searchQuery) {
       filters.$text = {

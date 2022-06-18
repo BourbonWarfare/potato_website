@@ -52,6 +52,7 @@ export class PostsService {
     searchQuery?: string,
     page?: string,
   ) {
+    debugger;
     const filters: FilterQuery<PostDocument> = startId
       ? {
           _id: {
