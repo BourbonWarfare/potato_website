@@ -8,6 +8,7 @@ import Category from './components/PostList/Category';
 import Post from './components/Post/Post';
 import UserProfile from './components/User/UserProfile';
 import Missions from './components/MissionTesting/Missons';
+import Document from './components/Documents/Document';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
           <Route path="/c/:category" element={<Category />} />
           <Route path="/u/:username" element={<UserProfile />} />
           <Route path="/c/:category/:id" element={<Post />} />
+          <Route path="/d/:document" element={<Document />} />
           {/* <Route
             path="/m/:untested"
             element={<Missions missionType="untested" />}

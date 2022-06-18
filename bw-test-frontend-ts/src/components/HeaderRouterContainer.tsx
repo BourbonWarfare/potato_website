@@ -10,6 +10,7 @@ import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
+  BookOutlined,
 } from '@ant-design/icons';
 
 const getItem = (
@@ -115,6 +116,12 @@ const items = [
       getItem('General Archive', 'generalArchive'),
     ]),
   ]),
+  getItem('Documents', 'docs', <BookOutlined />, [
+    getItem('Recruit Handbook', 'handbook'),
+    getItem('Leadership Discussion', 'leadDiscuss'),
+    getItem('Mission Documentation', 'missionDocs'),
+    getItem('Orientation / DB docs', 'orientDocs'),
+  ]),
 ];
 
 const HeaderRouterContainer: React.FC = ({ children }) => {
@@ -132,6 +139,12 @@ const HeaderRouterContainer: React.FC = ({ children }) => {
       case 'tested':
       case 'played':
         navigate(`/m/${e.key}`);
+        break;
+      case 'handbook':
+      case 'leadDiscuss':
+      case 'missionDocs':
+      case 'orientDocs':
+        navigate(`/d/${e.key}`);
         break;
       default:
         navigate(`/c/${e.key}`);
