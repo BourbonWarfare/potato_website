@@ -148,7 +148,6 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Could not find user.');
     }
-    console.log('user from users.service', user);
     return user;
   }
 }

@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Card, Space } from 'antd';
+import { Button, Card, Layout, PageHeader, Space } from 'antd';
 // import Meta from 'antd/lib/card/Meta';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCategoryPosts } from 'src/api/gets';
 
 // const postsMock = [];
@@ -24,6 +24,7 @@ const handleTitle = (
   link?: string,
   category?: string,
 ) => {
+  console.log('params: ', { title, id, link, category });
   return link ? (
     <div>
       <a
@@ -40,8 +41,13 @@ const handleTitle = (
 };
 
 const Category = () => {
+  const navigate = useNavigate();
   const { category } = useParams();
   const [posts, setPosts] = React.useState<any>([]);
+
+  const handleNewPost = () => {
+    navigate(`/c/${category}/submit`);
+  };
 
   React.useEffect(() => {
     const loadData = async () => {
@@ -53,8 +59,15 @@ const Category = () => {
     console.log('posts', posts);
   }, []);
   return (
-    <>
-      <div>{category}</div>
+    <Layout>
+      <PageHeader className="site-page-header" title={category} />
+      <Button
+        type="primary"
+        style={{ float: 'left', width: '100px' }}
+        onClick={handleNewPost}
+      >
+        New Post
+      </Button>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         {posts &&
           posts.map((post: any) => {
@@ -62,7 +75,7 @@ const Category = () => {
               <Card
                 title={handleTitle(
                   post.title,
-                  post.id,
+                  post._id,
                   post.url,
                   post.category,
                 )}
@@ -77,7 +90,7 @@ const Category = () => {
             );
           })}
       </Space>
-    </>
+    </Layout>
   );
 };
 

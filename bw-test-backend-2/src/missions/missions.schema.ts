@@ -58,6 +58,14 @@ export class Mission {
   @Prop()
   created: Date;
 
+  // @Prop({
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  //   unique: true,
+  // })
+  // testers: User[];
+
   // use this in place of played and passed possibly, potentially easier to filter
   // @Prop()
   // status: string;

@@ -15,12 +15,16 @@ const Document: React.FC = () => {
     <Layout>
       <Card title="doc card 1">This is a card card</Card>
       <Tabs defaultActiveKey="1" onChange={onTabChange}>
-        <TabPane tab="Tab 1" key="1">
-          Content of Tab Pane 1
+        <TabPane tab="Getting started" key="1">
+          Welcome to BW!
         </TabPane>
-        <TabPane tab="Tab 2" key="2">
-          <Card title="Tab Card 1">You can put cards in tabs too</Card>
-          <Card title="Tab Card 2">Decent way to organize material</Card>
+        <TabPane tab="Mod Info" key="2">
+          <Card title="Tab Card 1">
+            Here&apos;s where you download arma3sync
+          </Card>
+          <Card title="Tab Card 2">
+            Here&apos;s the thing to copy into arma 3 sync
+          </Card>
         </TabPane>
         <TabPane tab="Tab 3" key="3">
           Content of Tab Pane 3

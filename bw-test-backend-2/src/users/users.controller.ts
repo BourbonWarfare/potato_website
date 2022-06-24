@@ -31,6 +31,27 @@ export class UsersController {
     );
     return { id: generatedId };
   }
+  // @Post('/signup')
+  // async addUser(
+  //   @Body('username') userName: string,
+  //   @Body('password') userPass: string,
+  //   @Body('comments') userComments: any,
+  //   @Body('posts') userPosts: any,
+  //   @Body('email') userEmail: string,
+  // ) {
+  //   const generatedId = await this.usersService.insertUser(
+  //     userName,
+  //     userPass,
+  //     userComments,
+  //     userPosts,
+  //     userEmail,
+  //   );
+  //   return { id: generatedId };
+  // }
+  // @Post('/login')
+  // login(@Request() req): any {
+  //   return { User: req.user, msg: 'User logged in' };
+  // }
   @Get()
   async getAllUsers() {
     const users = await this.usersService.getUsers();

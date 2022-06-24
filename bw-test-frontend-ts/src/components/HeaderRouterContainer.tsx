@@ -122,6 +122,7 @@ const items = [
     getItem('Mission Documentation', 'missionDocs'),
     getItem('Orientation / DB docs', 'orientDocs'),
   ]),
+  getItem('Profile', 'profile'),
 ];
 
 const HeaderRouterContainer: React.FC = ({ children }) => {
@@ -145,6 +146,9 @@ const HeaderRouterContainer: React.FC = ({ children }) => {
       case 'missionDocs':
       case 'orientDocs':
         navigate(`/d/${e.key}`);
+        break;
+      case 'profile':
+        navigate(`/profile`);
         break;
       default:
         navigate(`/c/${e.key}`);
