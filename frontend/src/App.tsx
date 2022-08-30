@@ -21,16 +21,8 @@ import { isProtected } from './api/gets';
 import InternalServerError from './components/Errors/InternalServerError';
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = React.useState(false);
-  const [isDown, setIsDown] = React.useState(false);
-  const [user, setUser] = React.useState();
-  React.useEffect(() => {
-    const loggedInUser = localStorage.getItem('connect-sid');
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
-  }, []);
+  const [isAuth, setIsAuth] = React.useState<boolean>(false);
+  const [isDown, setIsDown] = React.useState<boolean>(false);
 
   // checks headers to see if session cookie is present
   React.useEffect(() => {

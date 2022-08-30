@@ -92,10 +92,13 @@ export class UsersService {
   //   const next = results.length;
   //   return { count, page, next, prev, limit, results };
   // }
-  async updateUser(userId: string, password: string) {
+  async updateUser(userId: string, password?: string, squadXML?: string) {
     const updatedUser = await this.findUser(userId);
     if (password) {
       updatedUser.password = password;
+    }
+    if (squadXML) {
+      updatedUser.squadXML = squadXML;
     }
     updatedUser.save();
   }

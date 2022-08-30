@@ -9,12 +9,14 @@ import { MissionsModule } from './missions/missions.module';
 import { PostsModule } from './posts/posts.module';
 
 import 'dotenv/config';
+import { PollsModule } from './polls/polls.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URI),
     PostsModule,
     MissionsModule,
+    PollsModule,
     AuthModule,
     ConfigModule.forRoot(),
   ],

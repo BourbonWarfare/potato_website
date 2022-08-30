@@ -71,10 +71,13 @@ export class CommentsService {
   }
   async updateComment(postId: string, commentId: string, body: string) {
     const result = await this.postModel.findById(postId);
-    let resultIndex;
-    result.comments.find((comment, index) => {
-      comment.id === commentId, (resultIndex = index);
+    const resultIndex = result.comments.findIndex((comment) => {
+      comment.id === commentId;
     });
+    // let resultIndex;
+    // result.comments.find((comment, index) => {
+    //   comment.id === commentId, (resultIndex = index);
+    // });
     if (body) {
       result.comments[resultIndex].body = body;
     }

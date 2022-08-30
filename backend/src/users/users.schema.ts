@@ -28,6 +28,9 @@ export class User {
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Mission' }])
   missions: any;
+
+  @Prop({ unique: true })
+  squadXML: string;
 }
 const UserSchema = SchemaFactory.createForClass(User);
 

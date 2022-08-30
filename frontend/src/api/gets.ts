@@ -75,12 +75,6 @@ export const getMissions = async (missionType: string, page?: number) => {
 };
 
 export const userLogout = () => {
-  // const load = await axios.get('/users/logout').then((response: any) => {
-  //   console.log('userLogout response: ', response);
-  //   return response;
-  // });
-  // const data = await load;
-  // return data;
   axios.get('/users/logout').then((response: any) => {
     console.log('user logout response: ', response);
     return response;

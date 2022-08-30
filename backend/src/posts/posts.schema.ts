@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from 'src/users/users.schema';
-// import paginate from 'mongoose-paginate-v2';
-// import paginate = require('mongoose-paginate-v2');/
 
 export type PostDocument = Post & mongoose.Document;
 

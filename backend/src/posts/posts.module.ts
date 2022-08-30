@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from '../users/users.module';
-import { User, UserSchema } from 'src/users/users.schema';
-import { UsersService } from 'src/users/users.service';
 import { CommentsController } from '../comments/comments.controller';
 import { Comment, CommentSchema } from '../comments/comments.schema';
 import { CommentsService } from '../comments/comments.service';

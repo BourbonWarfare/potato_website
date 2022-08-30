@@ -1,12 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
-import { paginate } from 'nestjs-paginate';
-import { cursorTo } from 'readline';
-import { find } from 'rxjs';
 import { UsersService } from 'src/users/users.service';
-import * as mongoose from 'mongoose';
-// import { Comment, CommentDocument } from '../comments/comments.schema';
 import { Post, PostDocument } from './posts.schema';
 
 @Injectable()

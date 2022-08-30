@@ -20,6 +20,7 @@ export class AuthService {
         check = validPass;
       })
       .catch((err) => console.log('error: ', err));
+    console.log('check: ', check);
     if (check !== null && check) {
       // const { password, ...results } = user.results;
       // console.log('bcrypt user.results: ', user.results);

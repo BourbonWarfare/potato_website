@@ -63,7 +63,6 @@ export class UsersController {
   @Post('/login')
   login(@Request() req): any {
     console.log('inside login');
-    console.log('req: ', req);
     return { User: req.user, msg: 'authenticated' };
   }
 
@@ -100,9 +99,14 @@ export class UsersController {
   @Patch(':id')
   async updateUser(
     @Param('id') userId: string,
-    @Body('password') userPass: string,
+    @Body('password') userPass?: string,
+    @Body('squadXML') squadXML?: string,
   ) {
-    await this.usersService.updateUser(userId, userPass);
+    let hashedPassword;
+    if (userPass) {
+      hashedPassword = await bcrypt.hash(userPass, 10);
+    }
+    await this.usersService.updateUser(userId, hashedPassword, squadXML);
     return null;
   }
 
