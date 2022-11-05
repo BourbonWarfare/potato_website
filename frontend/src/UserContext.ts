@@ -2,8 +2,14 @@
 import { createContext } from 'react';
 
 interface UserContextType {
-  token: any;
-  setToken: (value: any) => void;
+  user: any;
+  setUser: (value: any) => void;
+  admin: any;
+  setAdmin: (value: any) => void;
+  menuKey: any;
+  setMenuKey: (value: any) => void;
+  // userPrefs: any;
+  // setUserPrefs: (value: any) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

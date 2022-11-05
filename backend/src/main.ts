@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 declare const module: any;
 
@@ -23,7 +24,7 @@ async function bootstrap() {
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
-  await app.listen(process.env.BACKEND_PORT);
+  await app.listen(8080);
 
   if (module.hot) {
     module.hot.accept();

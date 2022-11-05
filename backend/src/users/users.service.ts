@@ -1,10 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-// import { Model, Mongoose } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { User, UserDocument } from './users.schema';
-// const bcrypt = require('bcrypt-nodejs');
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -49,6 +46,7 @@ export class UsersService {
   }
   async getSingleUser(userId: string) {
     // console.log('this.findUser: ', await this.findUser(userId));
+    console.log('get single user');
     const results = await this.findUser(userId);
     return { results };
   }
@@ -117,6 +115,7 @@ export class UsersService {
     console.log('userID: ', userId);
     try {
       if (mongoose.Types.ObjectId.isValid(userId)) {
+        console.log('userId passed: ');
         user = await this.userModel
           .findById(userId)
           .sort({ _id: 1 })
@@ -134,6 +133,7 @@ export class UsersService {
           .exec();
       } else {
         console.log('username passed');
+        console.log('userID ', userId);
         user = await this.userModel
           .findOne({ username: { $in: userId } })
           .sort({ _id: 1 })
@@ -149,14 +149,18 @@ export class UsersService {
           })
           .populate('comments')
           .exec();
+        // .find({});
+        console.log('user: ', user);
       }
     } catch (error) {
+      console.log('error: ', error);
       throw new NotFoundException('Could not find user.');
     }
-    if (!user) {
+    const foundUser = await user;
+    if (!foundUser) {
       throw new NotFoundException('Could not find user.');
     }
-    return user;
+    return foundUser;
   }
   async getUserId(username: string): Promise<UserDocument> {
     let user;
@@ -164,6 +168,7 @@ export class UsersService {
       user = await this.userModel
         .findOne({ username: { $in: username } })
         .exec();
+      console.log('user: ', user);
     } catch (error) {
       throw new NotFoundException('Could not find user.');
     }

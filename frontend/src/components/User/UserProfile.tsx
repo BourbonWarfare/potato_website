@@ -14,6 +14,7 @@ const UserProfile = () => {
     const loadData = async () => {
       const response = await getUserInfo(username);
       console.log('response from userProfile: ', response);
+      // const cookie = cookie;
       setUserInfo(response);
     };
     loadData();

@@ -63,6 +63,7 @@ export class UsersController {
   @Post('/login')
   login(@Request() req): any {
     console.log('inside login');
+    console.log('req.user', req.user);
     return { User: req.user, msg: 'authenticated' };
   }
 
@@ -72,19 +73,11 @@ export class UsersController {
     return users;
   }
 
-  @Get('/users/:id')
-  getUser(@Param('id') userId: string) {
-    return this.usersService.getSingleUser(userId);
-  }
-
   @UseGuards(AuthenticatedGuard)
   @Get('/protected')
   getHello(@Request() req): boolean {
     return req.user.username;
   }
-  // getHello(): boolean {
-  //   return true;
-  // }
 
   @Get('/logout')
   logout(@Request() req, @Response() res): any {
@@ -94,6 +87,11 @@ export class UsersController {
       res.send('Logged Out');
     });
     return { msg: 'The user session has ended' };
+  }
+
+  @Get(':id')
+  getUser(@Param('id') userId: string) {
+    return this.usersService.getSingleUser(userId);
   }
 
   @Patch(':id')

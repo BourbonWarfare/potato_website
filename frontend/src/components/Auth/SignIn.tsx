@@ -1,14 +1,19 @@
 import { Button, Card, Col, Form, Input, message, Row } from 'antd';
 import Password from 'antd/lib/input/Password';
 import React from 'react';
-import { isProtected } from 'src/api/gets';
+// import { isProtected } from 'src/api/gets';
 import { userLogin } from 'src/api/posts';
-import UserContext from './UserContext';
+import UserContext from 'src/UserContext';
 
 const SignIn = ({ setIsAuth }: any) => {
+  const user = React.useContext(UserContext);
   const onFinish = async (values: any) => {
     const data = await userLogin(values);
-    console.log('data: ', data);
+    console.log('user data: ', data.data.User);
+    console.log('user from signIn: ', user);
+    user?.setUser(data.data.User);
+    user?.setAdmin(true);
+    localStorage.setItem('userID', data.data.User._id);
     if (data.response && data.response.statusText === 'Not Found') {
       message.error('Credentials not accepted');
       return setIsAuth(false);
@@ -18,6 +23,10 @@ const SignIn = ({ setIsAuth }: any) => {
     }
     return null;
   };
+
+  React.useEffect(() => {
+    console.log('user context: ', user);
+  }, [user]);
 
   // const checkAuth = async () => {
   //   const check =

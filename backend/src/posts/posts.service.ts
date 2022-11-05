@@ -23,6 +23,7 @@ export class PostsService {
     author: string,
   ) {
     const userId = await this.usersService.getUserId(author);
+    console.log('userId: ', userId);
     const newPost = new this.postModel({
       title,
       text,

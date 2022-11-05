@@ -19,6 +19,7 @@ import Profile from './components/Profile/Profile';
 import SignIn from './components/Auth/SignIn';
 import { isProtected } from './api/gets';
 import InternalServerError from './components/Errors/InternalServerError';
+import UserContextProvider from './UserContextProvider';
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
@@ -47,35 +48,37 @@ const App: React.FC = () => {
 
   if (isAuth && !isDown) {
     return (
-      <BrowserRouter>
-        <HeaderRouterContainer>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/c/:category" element={<Category />} />
-            <Route path="/u/:username" element={<UserProfile />} />
-            <Route path="/c/:category/:id" element={<Post />} />
-            <Route path="/d/:document" element={<Document />} />
-            {/* <Route
-              path="/m/:untested"
-              element={<Missions missionType="untested" />}
-            />
-            <Route
-              path="/m/:tested"
-              element={<Missions missionType="tested" />}
-            />
-            <Route
-              path="/m/:played"
-              element={<Missions missionType="played" />}
-            /> */}
-            {/* <Route path="/m/:untested" element={<UntestedMissions />} />
-            <Route path="/m/:tested" element={<TestedMissions />} />
-            <Route path="/m/:played" element={<PlayedMissions />} /> */}
-            <Route path="/m/:missionType" element={<Missions />} />
-            <Route path="/c/:category/submit" element={<NewPost />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </HeaderRouterContainer>
-      </BrowserRouter>
+      <UserContextProvider>
+        <BrowserRouter>
+          <HeaderRouterContainer>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/c/:category" element={<Category />} />
+              <Route path="/u/:username" element={<UserProfile />} />
+              <Route path="/c/:category/:id" element={<Post />} />
+              <Route path="/d/:document" element={<Document />} />
+              {/* <Route
+                path="/m/:untested"
+                element={<Missions missionType="untested" />}
+              />
+              <Route
+                path="/m/:tested"
+                element={<Missions missionType="tested" />}
+              />
+              <Route
+                path="/m/:played"
+                element={<Missions missionType="played" />}
+              /> */}
+              {/* <Route path="/m/:untested" element={<UntestedMissions />} />
+              <Route path="/m/:tested" element={<TestedMissions />} />
+              <Route path="/m/:played" element={<PlayedMissions />} /> */}
+              <Route path="/m/:missionType" element={<Missions />} />
+              <Route path="/c/:category/submit" element={<NewPost />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </HeaderRouterContainer>
+        </BrowserRouter>
+      </UserContextProvider>
     );
   }
 
@@ -83,7 +86,11 @@ const App: React.FC = () => {
     return <InternalServerError />;
   }
 
-  return <SignIn setIsAuth={setIsAuth} />;
+  return (
+    <UserContextProvider>
+      <SignIn setIsAuth={setIsAuth} />
+    </UserContextProvider>
+  );
 };
 
 export default withCookies(App);

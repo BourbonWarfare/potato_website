@@ -56,7 +56,7 @@ export const getSinglePost = async (postId?: string, category?: string) => {
 export const getUserInfo = async (userId?: string) => {
   const load = await axios.get(`/users/${userId}`).then((response: any) => {
     console.log('get user: ', response.data.results);
-    return response.data.results[0];
+    return response.data.results;
   });
   const data = await load;
   return data;
@@ -88,7 +88,6 @@ export const isProtected = async () => {
       return response;
     })
     .catch((error) => {
-      console.log('error reached');
       console.log(
         'error response status: ',
         error.response && error.response.status,

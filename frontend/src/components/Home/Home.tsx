@@ -1,6 +1,11 @@
 import { ArrowsAltOutlined } from '@ant-design/icons';
 import { Button, Card, Space } from 'antd';
 import React from 'react';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { draftToMarkdown } from 'markdown-draft-js';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // import { useParams } from 'react-router-dom';
 import { getPosts } from 'src/api/gets';
 
@@ -43,6 +48,14 @@ const Home = () => {
     loadData();
     console.log('posts', posts);
   }, []);
+
+  const convert = (text: string) => {
+    const converted = EditorState.createWithContent(
+      convertFromRaw(JSON.parse(text)),
+    );
+
+    return draftToMarkdown(convertToRaw(converted.getCurrentContent()));
+  };
   return (
     <>
       <div>HOME</div>
@@ -59,7 +72,25 @@ const Home = () => {
                 )}
                 key={post._id}
               >
-                <div>{post.text}</div>
+                {/* <div>{post.text}</div> */}
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  // eslint-disable-next-line react/no-children-prop
+                  children={convert(post.text)}
+                  components={{
+                    // eslint-disable-next-line react/no-unstable-nested-components
+                    code({ inline, className, children }) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <SyntaxHighlighter language={match[1]}>
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className}>{children}</code>
+                      );
+                    },
+                  }}
+                />
                 <div>
                   <Button
                     href={`/c/${post.category}/${post._id}`}

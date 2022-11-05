@@ -58,3 +58,10 @@ export const newPost = (values: any) => {
     url: values.url || '',
   });
 };
+
+export const newComment = (values: any) => {
+  axios.post(`/comments/${values.postId}`, {
+    author: values.author,
+    body: values.body,
+  });
+};

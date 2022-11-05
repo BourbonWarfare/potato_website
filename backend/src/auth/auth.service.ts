@@ -28,7 +28,7 @@ export class AuthService {
       // console.log('bcrypt password: ', password);
       return user.results;
     }
-    return null;
+    return user;
   }
   // this is from /auth/login, returns jwt token for decryption client side
   async login(user: any) {

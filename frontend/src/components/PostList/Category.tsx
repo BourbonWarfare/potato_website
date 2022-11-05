@@ -4,7 +4,7 @@ import {
   EllipsisOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Layout, message, PageHeader, Space } from 'antd';
+import { Button, Card, Empty, Layout, message, PageHeader, Space } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,7 +27,7 @@ const handleTitle = (
   link?: string,
   category?: string,
 ) => {
-  console.log('params: ', { title, id, link, category });
+  // console.log('params: ', { title, id, link, category });
   return link ? (
     <>
       <div>
@@ -66,12 +66,12 @@ const Category = () => {
   React.useEffect(() => {
     const loadData = async () => {
       const response = await getCategoryPosts(category, page);
-      console.log('response: ', response);
-      setPage(page + 1);
+      // console.log('response: ', response);
+      setPage(page);
       setPosts(response);
     };
     loadData();
-    console.log('posts', posts);
+    // console.log('posts', posts);
   }, [category]);
 
   // const handleLoadMore = (nextPage) => {
@@ -87,7 +87,7 @@ const Category = () => {
       // Do load more content here!
       const loadData = async () => {
         const response = await getCategoryPosts(category, page);
-        console.log('response: ', response);
+        // console.log('response: ', response);
         setPage(page + 1);
         setPosts(response);
       };
@@ -130,10 +130,10 @@ const Category = () => {
         New Post
       </Button>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        {posts &&
+        {posts.length > 0 ?
           posts
             .map((post: any) => {
-              console.log('parsed: ', convert(post.text))
+              // console.log('parsed: ', convert(post.text))
               return (
                 <Card
                   title={handleTitle(
@@ -191,7 +191,10 @@ const Category = () => {
               );
             })
             .sort()
-            .reverse()}
+            .reverse()
+            :
+            <Empty description={<span>No Posts</span>}/>
+            }
       </Space>
     </Layout>
   );
