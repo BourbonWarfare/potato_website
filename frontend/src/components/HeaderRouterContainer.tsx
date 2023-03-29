@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 import Layout, { Content } from 'antd/lib/layout/layout';
 import { Menu } from 'antd';
 import '../index.css';
@@ -65,7 +65,11 @@ const items = [
   getItem('Profile', 'profile'),
 ];
 
-const HeaderRouterContainer: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const HeaderRouterContainer = ({ children }: Props) => {
   const navigate = useNavigate();
   const user = React.useContext(UserContext);
   const [current, setCurrent] = React.useState(user?.menuKey);

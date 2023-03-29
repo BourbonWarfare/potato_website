@@ -5,7 +5,7 @@ import { CookiesProvider } from 'react-cookie';
 // import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 
 // PUT PROVIDER HERE
 

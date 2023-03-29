@@ -4,7 +4,8 @@ import {
   EllipsisOutlined,
   ExportOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Empty, Layout, message, PageHeader, Space } from 'antd';
+import { Button, Card, Empty, Layout, message, Space } from 'antd';
+import {PageHeader} from '@ant-design/pro-layout';
 import moment from 'moment';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';

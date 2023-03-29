@@ -1,14 +1,6 @@
 import { FileImageOutlined, FileTextOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Layout,
-  PageHeader,
-  Space,
-  Tabs,
-} from 'antd';
+import { Button, Card, Form, Input, Layout, Space, Tabs } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'draft-js/dist/Draft.css';
