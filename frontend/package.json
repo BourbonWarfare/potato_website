@@ -49,7 +49,7 @@
     "remark-prism": "^1.3.6",
     "remark-sub-super": "^1.0.20",
     "styled-components": "^5.3.9",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "universal-cookie": "^4.0.4",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
