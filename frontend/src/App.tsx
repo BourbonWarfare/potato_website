@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import './App.css';
 import './App';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -7,19 +7,21 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import cookie, { useCookies } from 'react-cookie';
 // import Cookies from 'js-cookie';
 import { withCookies } from 'react-cookie';
-import Home from './components/Home/Home';
+import { Spin } from 'antd';
 import HeaderRouterContainer from './components/HeaderRouterContainer';
-import Category from './components/PostList/Category';
-import Post from './components/Post/Post';
-import UserProfile from './components/User/UserProfile';
-import Missions from './components/MissionTesting/Missons';
-import Document from './components/Documents/Document';
-import NewPost from './components/Post/NewPost';
 import Profile from './components/Profile/Profile';
 import SignIn from './components/Auth/SignIn';
 import { isProtected } from './api/gets';
 import InternalServerError from './components/Errors/InternalServerError';
 import UserContextProvider from './UserContextProvider';
+
+const Home = lazy(() => import('./components/Home/Home'));
+const Category = lazy(() => import('./components/PostList/Category'));
+const Post = lazy(() => import('./components/Post/Post'));
+const UserProfile = lazy(() => import('./components/User/UserProfile'));
+const Missions = lazy(() => import('./components/MissionTesting/Missons'));
+const Document = lazy(() => import('./components/Documents/Document'));
+const NewPost = lazy(() => import('./components/Post/NewPost'));
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
@@ -51,13 +53,14 @@ const App: React.FC = () => {
       <UserContextProvider>
         <BrowserRouter>
           <HeaderRouterContainer>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/c/:category" element={<Category />} />
-              <Route path="/u/:username" element={<UserProfile />} />
-              <Route path="/c/:category/:id" element={<Post />} />
-              <Route path="/d/:document" element={<Document />} />
-              {/* <Route
+            <Suspense fallback={<Spin tip="Loading..." size="large" />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/c/:category" element={<Category />} />
+                <Route path="/u/:username" element={<UserProfile />} />
+                <Route path="/c/:category/:id" element={<Post />} />
+                <Route path="/d/:document" element={<Document />} />
+                {/* <Route
                 path="/m/:untested"
                 element={<Missions missionType="untested" />}
               />
@@ -69,13 +72,14 @@ const App: React.FC = () => {
                 path="/m/:played"
                 element={<Missions missionType="played" />}
               /> */}
-              {/* <Route path="/m/:untested" element={<UntestedMissions />} />
+                {/* <Route path="/m/:untested" element={<UntestedMissions />} />
               <Route path="/m/:tested" element={<TestedMissions />} />
               <Route path="/m/:played" element={<PlayedMissions />} /> */}
-              <Route path="/m/:missionType" element={<Missions />} />
-              <Route path="/c/:category/submit" element={<NewPost />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
+                <Route path="/m/:missionType" element={<Missions />} />
+                <Route path="/c/:category/submit" element={<NewPost />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            </Suspense>
           </HeaderRouterContainer>
         </BrowserRouter>
       </UserContextProvider>
