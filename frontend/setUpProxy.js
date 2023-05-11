@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-clear-middleware');
 
-module.exports = function (app) {
+module.exports = (app) => {
   app.use(
     '/api',
     createProxyMiddleware({
