@@ -1,5 +1,5 @@
 # The base URL of the site; the only required configuration variable.
-base_url = "bourbonwarefare.com"
+base_url = "test.bourbonwarfare.com"
 
 # The site title and description; used in feeds by default.
 title = "Bourbon Warfare"
@@ -192,7 +192,7 @@ background_color = "dark"
 logo_text = "BourbonWarfare"
 
 # The logo link - defaults to base_url.
-logo_home_link = ""
+# logo_home_link = ""
 
 # Copyright text in HTML format. If specified,
 # entirely replaces default copyright and author.
