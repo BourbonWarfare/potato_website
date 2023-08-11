@@ -1,5 +1,5 @@
 # The base URL of the site; the only required configuration variable.
-base_url = "test.bourbonwarfare.com"
+base_url = "https://test.bourbonwarfare.com"
 
 # The site title and description; used in feeds by default.
 title = "Bourbon Warfare"
@@ -9,7 +9,7 @@ description = "A website"
 default_language = "en"
 
 # The site theme to use.
-theme = "terminimal"
+# theme = "terminimal"
 
 # For overriding the default output directory `public`, set it to another value (e.g.: "docs")
 output_dir = "public"
@@ -98,14 +98,14 @@ smart_punctuation = false
 # Configuration of the link checker.
 [link_checker]
 # Skip link checking for external URLs that start with these prefixes
-skip_prefixes = [
-    "http://[2001:db8::]/",
-]
+#skip_prefixes = [
+#    "http://[2001:db8::]/",
+#]
 
 # Skip anchor checking for external URLs that start with these prefixes
-skip_anchor_prefixes = [
-    "https://caniuse.com/",
-]
+#skip_anchor_prefixes = [
+#    "https://caniuse.com/",
+#]
 
 # Treat internal link problems as either "error" or "warn", default is "error"
 internal_level = "error"
@@ -192,7 +192,7 @@ background_color = "dark"
 logo_text = "BourbonWarfare"
 
 # The logo link - defaults to base_url.
-# logo_home_link = ""
+logo_home_link = "/index.html"
 
 # Copyright text in HTML format. If specified,
 # entirely replaces default copyright and author.
@@ -203,7 +203,16 @@ menu_items = [
     # each of these is optional, name and url are required
     # $BASE_URL is going to be substituted by base_url from configuration
     {name = "home", url = "$BASE_URL"},
-    {name = "news", url = "/news"},
-    {name = "recruit handbook", url = "/docs/recruit"},
-    {name = "community rules", url = "/docs/rules"},
+    {name = "news", url = "$BASE_URL/news"},
+    {name = "recruit handbook", url = "$BASE_URL/docs/recruit"},
+    {name = "community rules", url = "$BASE_URL/docs/rules"},
 ]
+
+# The text shown at the bottom of a post,
+# before earlier/later post links.
+post_view_navigation_prompt = "Thanks for reading! Read other posts?"
+
+# Use full Hack character set, not just a subset.
+# Switch this to true if you need full unicode support.
+# Defaults to false.
+use_full_hack_font = false
