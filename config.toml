@@ -33,7 +33,7 @@ minify_html = false
 ignored_content = []
 
 # When set to "true", a feed is automatically generated.
-generate_feed = false
+generate_feed = true
 
 # The filename to use for the feed. Used as the template filename, too.
 # Defaults to "atom.xml", which has a built-in template that renders an Atom 1.0 feed.
@@ -193,11 +193,6 @@ logo_text = "BourbonWarfare"
 
 # The logo link - defaults to base_url.
 logo_home_link = ""
-
-# Author name: when specified, modifies the default
-# copyright text. Apart from author, it will
-# contain current year and a link to the theme.
-author = "BadWolf"
 
 # Copyright text in HTML format. If specified,
 # entirely replaces default copyright and author.
